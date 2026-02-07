@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+body {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+.control-btn {
+  @apply px-4 py-2 rounded-lg font-semibold text-white shadow-md
+         hover:scale-105 transition;
+}
