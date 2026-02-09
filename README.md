@@ -1,2 +1,0 @@
-# VsrPipelineV2
-

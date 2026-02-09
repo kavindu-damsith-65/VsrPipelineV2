@@ -1,8 +1,13 @@
-import sys
+import sys, os
 from PySide6.QtWidgets import QApplication
-from app import App
+from realnet_ui import RealNet
 
 app = QApplication(sys.argv)
-w = App()
+
+base = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(base, "theme.qss")) as f:
+    app.setStyleSheet(f.read())
+
+w = RealNet()
 w.show()
 sys.exit(app.exec())

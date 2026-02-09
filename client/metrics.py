@@ -1,24 +1,25 @@
 import time
 from collections import deque
 
-class StageTimer:
+class Metrics:
     def __init__(self):
-        self.times = {}
+        self.ts = deque(maxlen=120)
+        self.lat = deque(maxlen=120)
 
-    def start(self, name):
-        self.times[name] = time.perf_counter_ns()
-
-    def stop(self, name):
-        self.times[name] = (time.perf_counter_ns() - self.times[name]) / 1e6
-
-class FPSCounter:
-    def __init__(self, window=30):
-        self.ts = deque(maxlen=window)
-
-    def tick(self):
+    def tick(self, latency):
         self.ts.append(time.time())
+        self.lat.append(latency)
 
     def fps(self):
         if len(self.ts) < 2:
             return 0
         return (len(self.ts) - 1) / (self.ts[-1] - self.ts[0])
+
+    def latency_avg(self):
+        return sum(self.lat) / len(self.lat)
+
+    def fps_history(self):
+        return [self.fps()] * len(self.lat)
+
+    def latency_history(self):
+        return list(self.lat)
